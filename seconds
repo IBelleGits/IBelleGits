@@ -1,37 +1,44 @@
 <?php
-
+// Controleren of er command-line arguments zijn meegegeven
 if ($argc <= 1) {
-    echo "Geen tijd meegegeven\n";
+    echo "Geen tijd meegegeven\n"; // Geen tijd meegegeven
     exit;
 }
 
-$totaal = 0;
+$totaal = 0; // Initialiseer de totale tijd in seconden
 
+// Loop door elk command-line argument (exclusief de scriptnaam)
 foreach (array_slice($argv, 1) as $string) {
-    $letter = substr($string, -1);
-    $getal = substr($string, 0, -1);
+    $letter = substr($string, -1); // Haal het laatste teken op (tijdseenheid)
+    $getal = substr($string, 0, -1); // Haal het nummergedeelte van de string op
 
+    // Controleer of het getalgedeelte een geldige numerieke waarde heeft
     if (!is_numeric($getal)) {
-        echo "'$string' is geen geldige invoer.\n";
+        echo "'$string' is geen geldige invoer.\n"; // Ongeldige input
         continue;
     }
 
+    // Converteer de tijdswaarde naar seconden op basis van de tijdseenheid
     switch ($letter) {
         case 'd':
-            $totaal += $getal * 86400;
+            $totaal += $getal * 86400; // Dagen naar seconden
             break;
         case 'u':
-            $totaal += $getal * 3600;
+            $totaal += $getal * 3600; // Uren naar seconden
             break;
         case 'm':
-            $totaal += $getal * 60;
+            $totaal += $getal * 60; // Minuten naar seconden
             break;
         case 's':
-            $totaal += $getal;
+            $totaal += $getal; // Seconden
             break;
+        default:
+            echo "'$string' heeft een onbekende tijdseenheid.\n"; // Onbekende tijdseenheid
+            continue;
     }
 }
 
-echo "De totale tijd is $totaal seconden\n";
+echo "De totale tijd is $totaal seconden\n"; // Output van de totale tijd in seconden
 
 ?>
+
